@@ -1,0 +1,71 @@
+from kivy.lang import Builder
+from kivymd.app import MDApp
+from kivymd.uix.screen import Screen
+from kivymd.uix.datatables import MDDataTable
+from kivy.metrics import dp
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.textfield import MDTextField
+from kivymd.uix.label import MDLabel
+
+
+
+# Display Pixles
+
+class MainApp(MDApp):
+    def build(self):
+        # Define Screen
+        screen = Screen()
+        # Define Table
+        r_d = [
+                [1, 'Starikov_1', "John", "Elder", "john@codemy.com", 'qwerty1', "111111111"],
+                [2,'Starikov_2', "Mary", "Elder", "mary@codemy.com", 'qwerty2', "222222222"],
+        ]
+        table = MDDataTable(
+            pos_hint={'center_x': 0.5, 'center_y': 0.5},
+            size_hint=(1, 0.6),
+            check=True,
+            column_data=[
+                ('Id', dp(30)),
+                ('Username', dp(30)),
+                ("First Name", dp(30)),
+                ("Last Name", dp(30)),
+                ("Email Address", dp(30)),
+                ("Password", dp(30)),
+                ("Phone Number", dp(30))
+            ],
+            row_data=r_d
+
+        )
+
+        # Bind the table
+        table.bind(on_check_press=self.checked)
+        table.bind(on_row_press=self.row_checked)
+
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "BlueGray"
+        # return Builder.load_file('table.kv')
+        # Add table widget to screen
+        screen.add_widget(table)
+
+        Id_layout = MDLabel(text='Id')
+        Username_layout = MDLabel(text='Username')
+        FirstName_layout = MDLabel(text='FirstName')
+        LastName_layout = MDLabel(text='LastName')
+        EmailAddress_layout = MDLabel(text='EmailAddress')
+        Password_layout = MDLabel(text='Password')
+        PhoneNumber_layout = MDLabel(text='PhoneNumber')
+
+
+
+        return screen
+
+    # Function for check presses
+    def checked(self, instance_table, current_row):
+        print(instance_table, current_row)
+
+    # Function for row presses
+    def row_checked(self, instance_table, instance_row):
+        print(instance_table, instance_row)
+
+
+MainApp().run()
